@@ -28,5 +28,6 @@ src = src[,..pick]
 colnames(src) = pick = c("SAMPLE_NAME", "ENA_FILE_PATH", "READ_COUNT", "POPULATION", "MD5SUM")
 src = src[src$SAMPLE_NAME %in% samples$V1]
 src$ENA_FILE_PATH = sub('ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR323/', 'https://ftp-trace.ncbi.nlm.nih.gov/1000genomes/ftp/1000G_2504_high_coverage/data/', src$ENA_FILE_PATH)
+src$ENA_FILE_PATH = sub('ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR324/', 'https://ftp-trace.ncbi.nlm.nih.gov/1000genomes/ftp/1000G_2504_high_coverage/data/', src$ENA_FILE_PATH)
 fwrite(src, file = '60_samples.csv', sep = ',', row.names = F)
 
