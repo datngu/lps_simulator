@@ -14,7 +14,7 @@ module load Nextflow/21.03
 module load singularity/rpm
 
 
-export NXF_SINGULARITY_CACHEDIR=/mnt/users/ngda/sofware/singularity
+#export NXF_SINGULARITY_CACHEDIR=/mnt/users/ngda/sofware/singularity
 
 
 nextflow run main.nf \

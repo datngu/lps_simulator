@@ -50,5 +50,6 @@ process Sample2BAM {
     
     samtools view -b -T ${genome} -o ${sample_id}.bam ${sample_id}.cram
 
+    rm ${sample_id}.cram
     """
 }
