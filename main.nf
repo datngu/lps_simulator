@@ -24,10 +24,6 @@ nextflow.enable.dsl=2
 workflow {
 
     // Create a channel of samples from the metadata
-    samplesChannel = file(params.metadata).readCSV().map { row ->
-        tuple(row.sample_id, row.url_path, row.read_count, row.population, row.md5)
-    }
-
     samplesChannel = Channel.fromPath(params.metadata) \
         | splitCsv(header:true) \
         | map { row-> tuple(row.SAMPLE_NAME, row.ENA_FILE_PATH, row.READ_COUNT, row.POPULATION, row.MD5SUM)}
