@@ -33,7 +33,7 @@ workflow {
 
 process Sample2BAM {
     input:
-    tuple sample_id, url_path, read_count, population, md5
+    tuple val(sample_id), val(url_path), val(read_count), val(population), val(md5)
     path genome
 
     cpus 1
