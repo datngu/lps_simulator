@@ -27,5 +27,6 @@ pick = c("SAMPLE_NAME", "#ENA_FILE_PATH", "READ_COUNT", "POPULATION", "MD5SUM")
 src = src[,..pick]
 colnames(src) = pick = c("SAMPLE_NAME", "ENA_FILE_PATH", "READ_COUNT", "POPULATION", "MD5SUM")
 src = src[src$SAMPLE_NAME %in% samples$V1]
+src$ENA_FILE_PATH = sub('ftp://', 'https://', src$ENA_FILE_PATH)
 fwrite(src, file = '60_samples.csv', sep = ',', row.names = F)
 
