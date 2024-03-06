@@ -102,7 +102,7 @@ if __name__ == "__main__":
     ## close all_files
     main_bam.close()
     for fo in out_bams:
-        out_bams.close()
+        fo.close()
 
 
 
