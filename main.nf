@@ -50,7 +50,7 @@ process Sample2BAM {
 
     ## try 5 times
 
-    for ((i=1; i<=$5; i++)); do
+    for ((i=1; i<=5; i++)); do
         wget ${url_path} -O ${sample_id}.cram
 
         actual_md5="\$(md5sum ${sample_id}.cram | awk '{print $1}')""
