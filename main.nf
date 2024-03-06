@@ -40,16 +40,40 @@ process Sample2BAM {
     memory '8GB'
 
     output:
-    path "${sample_id}.bam"
+    path "${sample_id}_lowpass.bam"
 
     script:
     """
-    wget ${url_path} -O ${sample_id}.cram
 
-    md5sum ${sample_id}.cram
-    
+    ## try 5 times
+
+    for ((i=1; i<=$5; i++)); do
+        wget ${url_path} -O ${sample_id}.cram
+
+        actual_md5="\$(md5sum ${sample_id}.cram | awk '{print $1}')""
+
+        if [ "\$actual_md5" == "$md5" ]; then
+            echo "MD5 sum matches! File downloaded successfully."
+            break
+        else
+            echo "MD5 sum does not match. Retrying..."
+            rm -f ${sample_id}.cram
+            wget ${url_path} -O ${sample_id}.cram
+        fi
+    done
+
     samtools view -b -T ${genome} -o ${sample_id}.bam ${sample_id}.cram
+    
+    ## release space
+    rm -f ${sample_id}.cram
+    
+    bam_sampling.py --bam ${sample_id}.bam \
+        --depth 0.3 0.5 0.67 0.8 1.0 1.25 1.5 2.0 \
+        --out '0.3_lowpass.bam' '0.5_lowpass.bam' '0.67_lowpass.bam' '0.8_lowpass.bam' '1.0_lowpass.bam' '1.25_lowpass.bam' '1.5_lowpass.bam' '2.0_lowpass.bam' \
+        --bam_size ${read_count}
 
-    rm ${sample_id}.cram
+    ## release space
+    rm -f ${sample_id}.bam
+
     """
 }
