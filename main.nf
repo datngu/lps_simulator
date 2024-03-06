@@ -31,7 +31,7 @@ workflow {
 
     Sample2BAM(samplesChannel, params.genome)
 
-    //DownSampling(Sample2BAM.out)
+    DownSampling(Sample2BAM.out)
 }
 
 process Sample2BAM {
