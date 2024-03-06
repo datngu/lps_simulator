@@ -46,7 +46,8 @@ process Sample2BAM {
     memory '8GB'
 
     output:
-    tuple val("${sample_id}"), val("${read_count}"), path "${sample_id}.bam"
+
+    tuple val("${sample_id}"), val("${read_count}"), path ("${sample_id}.bam")
 
     script:
     """
