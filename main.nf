@@ -34,7 +34,7 @@ workflow {
 
 process Sample2BAM {
 
-    publishDir "${params.trace_dir}/lowpass_bam_files", mode: 'symlink', overwrite: true
+    publishDir "${params.trace_dir}/hc_bam", mode: 'symlink', overwrite: true
 
     input:
     tuple val(sample_id), val(url_path), val(read_count), val(population), val(md5)
@@ -92,10 +92,11 @@ process DownSampling {
     script:
     """
 
-    bam_sampling.py --bam ${bam_file} \
+    bam_sampling.py --bam "${sample_id}.bam \
         --depth 0.3 0.5 0.67 0.8 1.0 1.25 1.5 2.0 \
         --out '0.3_lowpass.bam' '0.5_lowpass.bam' '0.67_lowpass.bam' '0.8_lowpass.bam' '1.0_lowpass.bam' '1.25_lowpass.bam' '1.5_lowpass.bam' '2.0_lowpass.bam' \
         --bam_size ${read_count}
+
 
     """
 }
