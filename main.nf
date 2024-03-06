@@ -28,8 +28,10 @@ workflow {
         | splitCsv(header:true) \
         | map { row-> tuple(row.SAMPLE_NAME, row.ENA_FILE_PATH, row.READ_COUNT, row.POPULATION, row.MD5SUM)}
 
+
     Sample2BAM(samplesChannel, params.genome)
-    DownSampling(Sample2BAM.out)
+
+    //DownSampling(Sample2BAM.out)
 }
 
 process Sample2BAM {
