@@ -43,7 +43,7 @@ process Sample2BAM {
     memory '8GB'
 
     output:
-    path "${sample_id}_lowpass.bam"
+    tuple val("${sample_id}"), val("${read_count}"), path "${sample_id}.bam"
 
     script:
     """
@@ -69,14 +69,33 @@ process Sample2BAM {
     
     ## release space
     rm -f ${sample_id}.cram
-    
-    bam_sampling.py --bam ${sample_id}.bam \
+
+    """
+}
+
+
+
+process DownSampling {
+
+    publishDir "${params.trace_dir}/lowpass_bam_files", mode: 'symlink', overwrite: true
+
+    input:
+    tuple val(sample_id), val(read_count), path(bam_file)
+
+    cpus 1
+    memory '8GB'
+
+    output:
+    path "*_lowpass.bam"
+
+    script:
+    """
+
+    bam_sampling.py --bam ${bam_file} \
         --depth 0.3 0.5 0.67 0.8 1.0 1.25 1.5 2.0 \
         --out '0.3_lowpass.bam' '0.5_lowpass.bam' '0.67_lowpass.bam' '0.8_lowpass.bam' '1.0_lowpass.bam' '1.25_lowpass.bam' '1.5_lowpass.bam' '2.0_lowpass.bam' \
         --bam_size ${read_count}
 
-    ## release space
-    rm -f ${sample_id}.bam
-
     """
 }
+
