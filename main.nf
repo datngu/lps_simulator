@@ -32,6 +32,9 @@ workflow {
 }
 
 process Sample2BAM {
+
+    publishDir "${params.trace_dir}/lowpass_bam_files", mode: 'symlink', overwrite: true
+
     input:
     tuple val(sample_id), val(url_path), val(read_count), val(population), val(md5)
     path genome
