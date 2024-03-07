@@ -90,14 +90,14 @@ process DownSampling {
     memory '8GB'
 
     output:
-    path "*_lowpass.bam"
+    path "*_lps.bam"
 
     script:
     """
 
-    bam_sampling.py --bam "${sample_id}.bam \
+    bam_sampling.py --bam ${sample_id}.bam \
         --depth 0.3 0.5 0.67 0.8 1.0 1.25 1.5 2.0 \
-        --out '0.3_lowpass.bam' '0.5_lowpass.bam' '0.67_lowpass.bam' '0.8_lowpass.bam' '1.0_lowpass.bam' '1.25_lowpass.bam' '1.5_lowpass.bam' '2.0_lowpass.bam' \
+        --out ${sample_id}_0.3_lps.bam ${sample_id}_0.5_lps.bam 0${sample_id}_.67_lps.bam ${sample_id}_0.8_lps.bam ${sample_id}_1.0_lps.bam 1${sample_id}_.25_lps.bam ${sample_id}_1.5_lps.bam ${sample_id}_2.0_lps.bam \
         --bam_size ${read_count}
 
 
