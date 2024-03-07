@@ -87,7 +87,7 @@ process DownSampling {
     tuple val(sample_id), val(read_count), path(bam_file)
 
     cpus 1
-    memory '8GB'
+    memory '16GB'
 
     output:
     path "*_lps.bam"
@@ -97,7 +97,7 @@ process DownSampling {
 
     bam_sampling.py --bam ${sample_id}.bam \
         --depth 0.3 0.5 0.67 0.8 1.0 1.25 1.5 2.0 \
-        --out ${sample_id}_0.3_lps.bam ${sample_id}_0.5_lps.bam 0${sample_id}_.67_lps.bam ${sample_id}_0.8_lps.bam ${sample_id}_1.0_lps.bam 1${sample_id}_.25_lps.bam ${sample_id}_1.5_lps.bam ${sample_id}_2.0_lps.bam \
+        --out ${sample_id}_0.3_lps.bam ${sample_id}_0.5_lps.bam ${sample_id}_0.67_lps.bam ${sample_id}_0.8_lps.bam ${sample_id}_1.0_lps.bam ${sample_id}_0.25_lps.bam ${sample_id}_1.5_lps.bam ${sample_id}_2.0_lps.bam \
         --bam_size ${read_count}
 
 
